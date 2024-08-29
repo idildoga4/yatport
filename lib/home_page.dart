@@ -156,7 +156,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  RentalConditionsWidget buildDetailsCard() {
+  Widget buildDetailsCard() {
     return RentalConditionsWidget();
   }
 

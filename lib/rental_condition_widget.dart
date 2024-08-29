@@ -9,20 +9,21 @@ class RentalConditionsWidget extends StatefulWidget {
 }
 
 class _RentalConditionsWidgetState extends State<RentalConditionsWidget> {
-  late Future<RentalCondition> rentalCondition;
+  late Future<List<RentalCondition>> rentalConditions;
 
   @override
   void initState() {
     super.initState();
-    rentalCondition = fetchRentalConditions();
+    rentalConditions = fetchRentalConditions();
   }
 
-  Future<RentalCondition> fetchRentalConditions() async {
+  Future<List<RentalCondition>> fetchRentalConditions() async {
     final response = await http.get(Uri.parse(
-        'https://b0df0867-2db8-4fcc-8477-87fb0a9b13aa.mock.pstmn.io'));
+        'https://66d05a85181d059277de39cc.mockapi.io/api/rent/rentalConditions'));
 
     if (response.statusCode == 200) {
-      return RentalCondition.fromJson(json.decode(response.body));
+      List<dynamic> jsonList = json.decode(response.body);
+      return jsonList.map((json) => RentalCondition.fromJson(json)).toList();
     } else {
       throw Exception('Failed to load rental conditions');
     }
@@ -30,82 +31,89 @@ class _RentalConditionsWidgetState extends State<RentalConditionsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<RentalCondition>(
-      future: rentalCondition,
+    return FutureBuilder<List<RentalCondition>>(
+      future: rentalConditions,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Hata oluştu: ${snapshot.error}'));
         } else if (snapshot.hasData) {
-          RentalCondition? condition = snapshot.data;
-          return Padding(
+          List<RentalCondition> conditions = snapshot.data!;
+          return ListView.builder(
             padding: const EdgeInsets.all(16.0),
-            child: Card(
-              elevation: 5.0,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Kiralama Şartları",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            itemCount: conditions.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Card(
+                  elevation: 5.0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Kiralama Şartları",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 16),
+                        buildConditionRow("İptal Politikası",
+                            conditions[index].cancellationPolicy),
+                        buildConditionRow("Minimum Kiralama Süresi",
+                            conditions[index].minimumRentalTime as String?),
+                        buildConditionRow(
+                            "Özel Günler için Minimum Kiralama Süresi",
+                            conditions[index].minimumRentalTimeForSpecialDays
+                                as String?),
+                        buildConditionRow(
+                            "Tur Şartları", conditions[index].tourConditions),
+                      ],
                     ),
-                    SizedBox(height: 16),
-                    buildConditionRow(
-                        "İptal Politikası", condition?.cancellationPolicy),
-                    buildConditionRow("Minimum Kiralama Süresi",
-                        condition?.minimumRentalTime),
-                    buildConditionRow(
-                        "Özel Günler için Minimum Kiralama Süresi",
-                        condition?.minimumRentalTimeForSpecialDays),
-                    buildConditionRow(
-                        "Tur Şartları", condition?.tourConditions),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           );
         } else {
-          return Center(child: Text('Veri bulunamadı'));
+          return const Center(child: Text('Veri bulunamadı'));
         }
       },
     );
   }
+}
 
-  Widget buildConditionRow(String title, String? value) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(fontSize: 16),
+Widget buildConditionRow(String title, String? value) {
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 16.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(fontSize: 16),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade100,
+            borderRadius: BorderRadius.circular(8.0),
+            border: Border.all(color: Colors.grey.shade300),
           ),
-          SizedBox(height: 8),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-            decoration: BoxDecoration(
-              color: Colors.grey.shade100,
-              borderRadius: BorderRadius.circular(8.0),
-              border: Border.all(color: Colors.grey.shade300),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  value ?? '',
-                  style: TextStyle(fontSize: 16),
-                ),
-                Icon(Icons.arrow_drop_down),
-              ],
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                value ?? '',
+                style: const TextStyle(fontSize: 16),
+              ),
+              const Icon(Icons.arrow_drop_down),
+            ],
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
 }

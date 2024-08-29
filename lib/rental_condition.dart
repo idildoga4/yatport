@@ -1,7 +1,7 @@
 class RentalCondition {
   final String cancellationPolicy;
-  final String minimumRentalTime;
-  final String minimumRentalTimeForSpecialDays;
+  final int minimumRentalTime;
+  final int minimumRentalTimeForSpecialDays;
   final String tourConditions;
 
   RentalCondition({
