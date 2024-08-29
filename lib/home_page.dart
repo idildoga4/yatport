@@ -7,6 +7,7 @@ class YatPortApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: HomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -17,12 +18,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // Mock data, replace with API data fetching in a real app
-  final cancelationPolicy = "1 Hafta";
-  final minRentDuration = "2 Saat";
-  final specialDaysMinRentDuration = "2 Saat";
-  final tourOptions = "Saatlik Tur & Yüzme Turu";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,10 +38,17 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 20),
             Center(
               child: ElevatedButton(
-                onPressed: () {
-                  // Handle save changes
-                },
-                child: Text('Değişiklikleri Kaydet'),
+            
+                onPressed: () {},
+                child: const Text('Değişiklikleri Kaydet'),
+                
+                  style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white, 
+                  backgroundColor: Colors.blue,
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20), // Butonun iç dolgusunu ayarlar
+                  minimumSize: const Size(350, 65), 
+          ),
+                
               ),
             ),
           ],
@@ -60,44 +62,50 @@ class _HomePageState extends State<HomePage> {
       color: Colors.white,
       elevation: 1.0,
       child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Image.asset('assets/images/logo.png'),
             const SizedBox(width: 15),
             const Text(
               "YatPort",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
             ),
-            const SizedBox(width: 200),
+            const Spacer(),
             const Icon(
               Icons.notifications_outlined,
               size: 30,
             ),
             const SizedBox(width: 15),
             const Icon(Icons.list_outlined, size: 30),
-          ])),
+          ],
+        ),
+      ),
     );
   }
 
   Widget vehicleCard() {
     return const Card(
-        color: Colors.white,
-        elevation: 2.0,
-        child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.arrow_back_ios,
-                  size: 30,
-                ),
-                Text(
-                  "Taşıtlarım",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
-                )
-              ],
-            )));
+      color: Colors.white,
+      elevation: 2.0,
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              Icons.arrow_back_ios,
+              size: 30,
+            ),
+            Text(
+              "Taşıtlarım",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget conditionsCard() {
@@ -106,74 +114,38 @@ class _HomePageState extends State<HomePage> {
       elevation: 3.0,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20.0),
-                  border: Border.all(color: Colors.grey.shade300),
-                ),
-                child: const Text(
-                  'Taşıt Detayları',
-                  style: TextStyle(color: Color.fromARGB(186, 0, 0, 0)),
-                ),
-              ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(20.0),
-                  border: Border.all(color: Colors.grey.shade300),
-                ),
-                child: const Text(
-                  'Şartlar',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30.0),
-                  border: Border.all(color: Colors.grey.shade400),
-                ),
-                child: const Text(
-                  'Servisler',
-                  style: TextStyle(color: Color.fromARGB(186, 0, 0, 0)),
-                ),
-              ),
-            ],
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _buildConditionTab("Taşıt Detayları", Colors.white,
+                Colors.grey.shade300, const Color.fromARGB(186, 0, 0, 0)),
+            _buildConditionTab("Şartlar", Colors.blue, Colors.grey.shade300,
+                Colors.white),
+            _buildConditionTab("Servisler", Colors.white,
+                Colors.grey.shade400, const Color.fromARGB(186, 0, 0, 0)),
+          ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildConditionTab(String title, Color backgroundColor, Color borderColor, Color textColor) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(20.0),
+        border: Border.all(color: borderColor),
+      ),
+      child: Text(
+        title,
+        style: TextStyle(color: textColor),
       ),
     );
   }
 
   Widget buildDetailsCard() {
     return RentalConditionsWidget();
-  }
-
-  Widget buildDetailRow(String title, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.w500),
-          ),
-          Text(value),
-        ],
-      ),
-    );
   }
 
   Widget buildUsageConditions() {

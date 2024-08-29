@@ -1,7 +1,7 @@
 class RentalCondition {
   final String cancellationPolicy;
-  final int minimumRentalTime;
-  final int minimumRentalTimeForSpecialDays;
+  final String minimumRentalTime;
+  final String minimumRentalTimeForSpecialDays;
   final String tourConditions;
 
   RentalCondition({
@@ -14,8 +14,8 @@ class RentalCondition {
   factory RentalCondition.fromJson(Map<String, dynamic> json) {
     return RentalCondition(
       cancellationPolicy: json['cancellationPolicy'],
-      minimumRentalTime: json['minimumRentalTime'],
-      minimumRentalTimeForSpecialDays: json['minimumRentalTimeForSpecialDays'],
+      minimumRentalTime: json['minimumRentalTime'].toString(),
+      minimumRentalTimeForSpecialDays: json['minimumRentalTimeForSpecialDays'].toString(),
       tourConditions: json['tourConditions'],
     );
   }

@@ -41,8 +41,10 @@ class _RentalConditionsWidgetState extends State<RentalConditionsWidget> {
         } else if (snapshot.hasData) {
           List<RentalCondition> conditions = snapshot.data!;
           return ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.all(16.0),
-            itemCount: conditions.length,
+            itemCount: 1,
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
@@ -62,11 +64,10 @@ class _RentalConditionsWidgetState extends State<RentalConditionsWidget> {
                         buildConditionRow("İptal Politikası",
                             conditions[index].cancellationPolicy),
                         buildConditionRow("Minimum Kiralama Süresi",
-                            conditions[index].minimumRentalTime as String?),
+                            conditions[index].minimumRentalTime),
                         buildConditionRow(
                             "Özel Günler için Minimum Kiralama Süresi",
-                            conditions[index].minimumRentalTimeForSpecialDays
-                                as String?),
+                            conditions[index].minimumRentalTimeForSpecialDays),
                         buildConditionRow(
                             "Tur Şartları", conditions[index].tourConditions),
                       ],
@@ -82,17 +83,16 @@ class _RentalConditionsWidgetState extends State<RentalConditionsWidget> {
       },
     );
   }
-}
 
-Widget buildConditionRow(String title, String? value) {
+Widget buildConditionRow(String label, String? value) {
   return Padding(
-    padding: const EdgeInsets.only(bottom: 16.0),
+    padding: const EdgeInsets.symmetric(vertical: 8.0),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          title,
-          style: const TextStyle(fontSize: 16),
+          label,
+          style: const TextStyle(fontSize: 16, color: Color.fromARGB(186, 0, 0, 0)),
         ),
         const SizedBox(height: 8),
         Container(
@@ -116,4 +116,5 @@ Widget buildConditionRow(String title, String? value) {
       ],
     ),
   );
+}
 }
