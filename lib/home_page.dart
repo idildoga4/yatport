@@ -20,35 +20,57 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    showAlertDialog(BuildContext context) {
+      AlertDialog alert = AlertDialog(
+          content: const Text("Kaydedildi. İyi eğlenceler!"),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Center(
+                  child: Text('Kapat'),
+                ))
+          ]);
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
+
     return Scaffold(
+      backgroundColor: const Color.fromARGB(57, 187, 206, 216),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildAppBarCard(),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             vehicleCard(),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             conditionsCard(),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             buildDetailsCard(),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             buildUsageConditions(),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Center(
               child: ElevatedButton(
-            
-                onPressed: () {},
+                onPressed: () {
+                  showAlertDialog(context);
+                },
                 child: const Text('Değişiklikleri Kaydet'),
-                
-                  style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white, 
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
                   backgroundColor: Colors.blue,
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20), // Butonun iç dolgusunu ayarlar
-                  minimumSize: const Size(350, 65), 
-          ),
-                
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                  minimumSize: const Size(350, 65),
+                ),
               ),
             ),
           ],
@@ -119,17 +141,18 @@ class _HomePageState extends State<HomePage> {
           children: [
             _buildConditionTab("Taşıt Detayları", Colors.white,
                 Colors.grey.shade300, const Color.fromARGB(186, 0, 0, 0)),
-            _buildConditionTab("Şartlar", Colors.blue, Colors.grey.shade300,
-                Colors.white),
-            _buildConditionTab("Servisler", Colors.white,
-                Colors.grey.shade400, const Color.fromARGB(186, 0, 0, 0)),
+            _buildConditionTab(
+                "Şartlar", Colors.blue, Colors.grey.shade300, Colors.white),
+            _buildConditionTab("Servisler", Colors.white, Colors.grey.shade400,
+                const Color.fromARGB(186, 0, 0, 0)),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildConditionTab(String title, Color backgroundColor, Color borderColor, Color textColor) {
+  Widget _buildConditionTab(
+      String title, Color backgroundColor, Color borderColor, Color textColor) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       decoration: BoxDecoration(

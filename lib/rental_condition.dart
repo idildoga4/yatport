@@ -1,8 +1,8 @@
 class RentalCondition {
-  final String cancellationPolicy;
-  final String minimumRentalTime;
-  final String minimumRentalTimeForSpecialDays;
-  final String tourConditions;
+  late final String cancellationPolicy;
+  late final String minimumRentalTime;
+  late final String minimumRentalTimeForSpecialDays;
+  late final String tourConditions;
 
   RentalCondition({
     required this.cancellationPolicy,
@@ -15,7 +15,8 @@ class RentalCondition {
     return RentalCondition(
       cancellationPolicy: json['cancellationPolicy'],
       minimumRentalTime: json['minimumRentalTime'].toString(),
-      minimumRentalTimeForSpecialDays: json['minimumRentalTimeForSpecialDays'].toString(),
+      minimumRentalTimeForSpecialDays:
+          json['minimumRentalTimeForSpecialDays'].toString(),
       tourConditions: json['tourConditions'],
     );
   }

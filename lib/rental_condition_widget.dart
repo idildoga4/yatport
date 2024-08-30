@@ -49,6 +49,7 @@ class _RentalConditionsWidgetState extends State<RentalConditionsWidget> {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: Card(
+                  color: Colors.white,
                   elevation: 5.0,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -61,15 +62,40 @@ class _RentalConditionsWidgetState extends State<RentalConditionsWidget> {
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 16),
-                        buildConditionRow("İptal Politikası",
-                            conditions[index].cancellationPolicy),
-                        buildConditionRow("Minimum Kiralama Süresi",
-                            conditions[index].minimumRentalTime),
+                        buildConditionRow(
+                            "İptal Politikası",
+                            conditions[index].cancellationPolicy,
+                            ['1 Hafta', '2 Hafta', 'Sunday'], (newValue) {
+                          setState(() {
+                            conditions[index].cancellationPolicy = newValue!;
+                          });
+                        }),
+                        buildConditionRow(
+                            "Minimum Kiralama Süresi",
+                            conditions[index].minimumRentalTime,
+                            ['2 Saat', '3 Saat', '98'], (newValue) {
+                          setState(() {
+                            conditions[index].minimumRentalTime = newValue!;
+                          });
+                        }),
                         buildConditionRow(
                             "Özel Günler için Minimum Kiralama Süresi",
-                            conditions[index].minimumRentalTimeForSpecialDays),
+                            conditions[index].minimumRentalTimeForSpecialDays,
+                            ['2 Saat', '3 Saat', '55'], (newValue) {
+                          setState(() {
+                            conditions[index].minimumRentalTimeForSpecialDays =
+                                newValue!;
+                          });
+                        }),
                         buildConditionRow(
-                            "Tur Şartları", conditions[index].tourConditions),
+                            "Tur Şartları",
+                            conditions[index].tourConditions,
+                            ['Saatlik Tur', 'Yüzme Turu', 'Gasoline'],
+                            (newValue) {
+                          setState(() {
+                            conditions[index].tourConditions = newValue!;
+                          });
+                        }),
                       ],
                     ),
                   ),
@@ -84,37 +110,44 @@ class _RentalConditionsWidgetState extends State<RentalConditionsWidget> {
     );
   }
 
-Widget buildConditionRow(String label, String? value) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8.0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(fontSize: 16, color: Color.fromARGB(186, 0, 0, 0)),
-        ),
-        const SizedBox(height: 8),
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-          decoration: BoxDecoration(
-            color: Colors.grey.shade100,
-            borderRadius: BorderRadius.circular(8.0),
-            border: Border.all(color: Colors.grey.shade300),
+  Widget buildConditionRow(String label, String? value, List<String> options,
+      ValueChanged<String?>? onChanged) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+                fontSize: 16, color: Color.fromARGB(186, 0, 0, 0)),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                value ?? '',
-                style: const TextStyle(fontSize: 16),
+          const SizedBox(height: 8),
+          Container(
+            padding:
+                const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8.0),
+              border: Border.all(color: Colors.grey.shade300),
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: value,
+                isExpanded: true,
+                onChanged: onChanged,
+                items: options.map<DropdownMenuItem<String>>((String option) {
+                  return DropdownMenuItem<String>(
+                    value: option,
+                    child: Text(option, style: const TextStyle(fontSize: 16)),
+                  );
+                }).toList(),
+                icon: const Icon(Icons.arrow_drop_down),
               ),
-              const Icon(Icons.arrow_drop_down),
-            ],
+            ),
           ),
-        ),
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+  }
 }
