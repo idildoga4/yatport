@@ -51,9 +51,9 @@ class _HomePageState extends State<HomePage> {
             buildAppBarCard(),
             const SizedBox(height: 10),
             vehicleCard(),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
             conditionsCard(),
-            const SizedBox(height: 10),
+            const SizedBox(height: 3),
             buildDetailsCard(),
             const SizedBox(height: 10),
             buildUsageConditions(),
@@ -81,50 +81,62 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildAppBarCard() {
     return Card(
+      shadowColor: Color.fromARGB(5, 0, 0, 0),
       color: Colors.white,
       elevation: 1.0,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset('assets/images/logo.png'),
-            const SizedBox(width: 15),
-            const Text(
-              "YatPort",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
-            ),
-            const Spacer(),
-            const Icon(
-              Icons.notifications_outlined,
-              size: 30,
-            ),
-            const SizedBox(width: 15),
-            const Icon(Icons.list_outlined, size: 30),
-          ],
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset('assets/images/logo.png', width: 60, height: 40),
+              const SizedBox(width: 10),
+              Image.asset('assets/images/yatport.png', width: 80, height: 40),
+              const Spacer(),
+              Image.asset('assets/images/notification.png',
+                  width: 30, height: 40),
+              const SizedBox(width: 15),
+              Image.asset('assets/images/hamburger_menu.png',
+                  width: 30, height: 40),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget vehicleCard() {
-    return const Card(
+    return Card(
+      shadowColor: Color.fromARGB(5, 0, 0, 0),
       color: Colors.white,
       elevation: 2.0,
       child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(
-              Icons.arrow_back_ios,
-              size: 30,
-            ),
-            Text(
-              "Taşıtlarım",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
-            ),
-          ],
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                width: 17,
+              ),
+              const Center(
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  size: 25,
+                  color: Color.fromARGB(164, 0, 0, 0),
+                ),
+              ),
+              const SizedBox(
+                width: 12,
+              ),
+              Image.asset(
+                'assets/images/tasitlarim.png',
+                width: 120,
+                height: 40,
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -132,6 +144,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget conditionsCard() {
     return Card(
+      shadowColor: Color.fromARGB(5, 0, 0, 0),
       color: Colors.white,
       elevation: 3.0,
       child: Padding(
@@ -139,12 +152,18 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _buildConditionTab("Taşıt Detayları", Colors.white,
-                Colors.grey.shade300, const Color.fromARGB(186, 0, 0, 0)),
             _buildConditionTab(
-                "Şartlar", Colors.blue, Colors.grey.shade300, Colors.white),
-            _buildConditionTab("Servisler", Colors.white, Colors.grey.shade400,
-                const Color.fromARGB(186, 0, 0, 0)),
+                "Taşıt Detayları",
+                Colors.white,
+                const Color.fromARGB(36, 189, 189, 189),
+                const Color.fromARGB(211, 0, 0, 0)),
+            _buildConditionTab("Şartlar", Color.fromARGB(255, 24, 158, 253),
+                Color.fromARGB(255, 24, 158, 253), Colors.white),
+            _buildConditionTab(
+                "Servisler",
+                Colors.white,
+                const Color.fromARGB(36, 189, 189, 189),
+                const Color.fromARGB(211, 0, 0, 0)),
           ],
         ),
       ),
@@ -154,15 +173,18 @@ class _HomePageState extends State<HomePage> {
   Widget _buildConditionTab(
       String title, Color backgroundColor, Color borderColor, Color textColor) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(30.0),
         border: Border.all(color: borderColor),
       ),
       child: Text(
         title,
-        style: TextStyle(color: textColor),
+        style: TextStyle(
+          color: textColor,
+          fontSize: 18,
+        ),
       ),
     );
   }
