@@ -48,7 +48,7 @@ class _UsageConditionsCardState extends State<UsageConditionsCard> {
           children: [
             const Text(
               "Kullanım Şartları",
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color:Color.fromARGB(220, 0, 0, 0)),
+              style: TextStyle(fontSize: 1, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             Column(
