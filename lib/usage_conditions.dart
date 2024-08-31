@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UsageConditionsCard extends StatefulWidget {
   @override
@@ -9,9 +10,6 @@ class _UsageConditionsCardState extends State<UsageConditionsCard> {
   late List<bool> conditionsChecked;
 
   final List<String> usageConditions = [
-    "Dışardan catering firması getirilemez",
-    "Mangal Yapılamaz",
-    "Yüzme turları için yüzme turu seçeneğini seçmeniz gerekmektedir",
     "Dışardan catering firması getirilemez",
     "Mangal Yapılamaz",
     "Yüzme turları için yüzme turu seçeneğini seçmeniz gerekmektedir",
@@ -38,7 +36,7 @@ class _UsageConditionsCardState extends State<UsageConditionsCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return  Card(
       color: Colors.white,
       elevation: 4.0,
       child: Padding(
@@ -46,9 +44,12 @@ class _UsageConditionsCardState extends State<UsageConditionsCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+             Text(
               "Kullanım Şartları",
-              style: TextStyle(fontSize: 1, fontWeight: FontWeight.bold),
+              style:GoogleFonts.inter( 
+                textStyle: const TextStyle(
+                  fontSize: 24,
+                   fontWeight: FontWeight.bold,)),
             ),
             const SizedBox(height: 10),
             Column(
@@ -63,7 +64,14 @@ class _UsageConditionsCardState extends State<UsageConditionsCard> {
                       color: conditionsChecked[index]
                           ? Colors.green
                           : Colors.grey),
-                  title: Text(condition),
+                  title: Text(condition,
+                  style:const TextStyle(
+                    fontSize: 16,
+                      fontWeight: FontWeight.w400, 
+                      fontFamily: 'Inter',
+                      color: Color.fromARGB(255, 30, 33, 36), 
+                  )
+                  ),
                   onTap: () {
                     setState(() {
                       conditionsChecked[index] = !conditionsChecked[index];
