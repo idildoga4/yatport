@@ -103,9 +103,9 @@ class _HomePageState extends State<HomePage> {
             buildAppBarCard(),
             const SizedBox(height: 10),
             vehicleCard(),
-            const SizedBox(height: 5),
+            const SizedBox(height: 15),
             conditionsCard(),
-            const SizedBox(height: 3),
+            const SizedBox(height: 20),
             buildDetailsCard(),
             const SizedBox(height: 5),
             buildUsageConditions(),
@@ -134,11 +134,16 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildAppBarCard() {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white,
+         borderRadius: BorderRadius.circular(12),
+      ),
+      
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(
+            
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.asset('assets/images/logo.png', width: 60, height: 40),
@@ -159,7 +164,11 @@ class _HomePageState extends State<HomePage> {
 
   Widget vehicleCard() {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
@@ -197,7 +206,11 @@ class _HomePageState extends State<HomePage> {
 
   Widget conditionsCard() {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -239,9 +252,9 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(width: 16),
               _buildConditionTab(
                   "Organizasyonlar",
-                  Colors.white,
-                  const Color.fromARGB(38, 114, 114, 114),
-                  const Color(0xFF526675),
+                  activeTab == "Organizasyonlar" ? Color(0xFF189DFD) : Colors.white,
+                activeTab == "Organizasyonlar" ? Color(0xFF189DFD) : Color.fromARGB(38, 114, 114, 114),
+                activeTab == "Organizasyonlar" ? Colors.white : Color(0xFF526675),
                   context,
                   setActiveTab,
                   "Organizasyonlar"),
@@ -262,12 +275,18 @@ class _HomePageState extends State<HomePage> {
       String tabName) {
     return GestureDetector(
       onTap: () {
-        setActiveTab(tabName);
-        Navigator.push(
+        setState(() {
+          activeTab=title;
+        });
+        if(title=="Organizasyonlar")
+        {
+          Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => OrganizationPage(activeTab: tabName)),
         );
+        }
+        
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 18.0),
@@ -293,6 +312,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildDetailsCard() {
     return Container(
+      
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -388,36 +408,45 @@ class _HomePageState extends State<HomePage> {
         ),
         const SizedBox(height: 8),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          width: double.infinity, // Genişlik tam ekran olabilir
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
           decoration: BoxDecoration(
             color: Color(0xFFF7F9FA),
-            borderRadius: BorderRadius.circular(8.0),
+            borderRadius: BorderRadius.circular(8),
           ),
-          child: DropdownButton<String>(
-            value: currentValue,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            elevation: 16,
-            isExpanded: true,
-            style: GoogleFonts.inter(
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              value: currentValue,
+              icon: const Icon(Icons.keyboard_arrow_down, size: 20),
+              elevation: 16,
+              isExpanded: true, // İkonu en sağa taşır ve tam genişlik sağlar
+              style: GoogleFonts.inter(
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
-                color: Color(0xFF1A2228)),
-            onChanged: onChanged,
-            items: items.map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
+                color: Color(0xFF1A2228),
+              ),
+              onChanged: onChanged,
+              items: items.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
           ),
         ),
       ],
     );
   }
 
+
   Widget buildUsageConditions() {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+      ),
+     
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

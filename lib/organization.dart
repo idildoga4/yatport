@@ -72,10 +72,10 @@ class _OrganizationPageState extends State<OrganizationPage> {
             buildAppBarCard(),
             const SizedBox(height: 10),
             vehicleCard(),
-            const SizedBox(height: 5),
+            const SizedBox(height: 15),
             conditionsCard(),
             const SizedBox(
-              height: 5,
+              height: 15,
             ),
             buildUsageConditions(),
             const SizedBox(height: 5),
@@ -103,7 +103,11 @@ class _OrganizationPageState extends State<OrganizationPage> {
 
   Widget conditionsCard() {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white,
+         borderRadius: BorderRadius.circular(12),
+      ),
+      
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -119,9 +123,15 @@ class _OrganizationPageState extends State<OrganizationPage> {
               const SizedBox(width: 16),
               _buildConditionTab(
                   "Şartlar",
-                  const Color.fromARGB(255, 24, 158, 253),
-                  const Color.fromARGB(255, 24, 158, 253),
-                  Colors.white,
+                  activeTab == "Şartlar"
+                      ? const Color.fromARGB(255, 24, 158, 253)
+                      : Colors.white,
+                  activeTab == "Şartlar"
+                      ? Colors.blue
+                      : const Color.fromARGB(38, 114, 114, 114),
+                  activeTab == "Şartlar"
+                      ? Colors.white
+                      : const Color(0xFF526675),
                   context),
               const SizedBox(width: 16),
               _buildConditionTab(
@@ -133,9 +143,9 @@ class _OrganizationPageState extends State<OrganizationPage> {
               const SizedBox(width: 16),
               _buildConditionTab(
                 "Organizasyonlar",
-                Colors.white,
-                const Color.fromARGB(38, 114, 114, 114),
-                const Color(0xFF526675),
+                activeTab == "Organizasyonlar" ? Color(0xFF189DFD) : Colors.white,
+                activeTab == "Organizasyonlar" ? Color(0xFF189DFD) : Color.fromARGB(38, 114, 114, 114),
+                activeTab == "Organizasyonlar" ? Colors.white : Color(0xFF526675),
                 context,
               ),
             ],
@@ -164,6 +174,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
         }
       },
       child: Container(
+        
         padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 18.0),
         decoration: BoxDecoration(
           color: backgroundColor,
@@ -186,7 +197,11 @@ class _OrganizationPageState extends State<OrganizationPage> {
 
   Widget buildAppBarCard() {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white,
+         borderRadius: BorderRadius.circular(12),
+      ),
+      
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -211,7 +226,11 @@ class _OrganizationPageState extends State<OrganizationPage> {
 
   Widget vehicleCard() {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white,
+         borderRadius: BorderRadius.circular(12),
+      ),
+      
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
@@ -248,7 +267,11 @@ class _OrganizationPageState extends State<OrganizationPage> {
 
   Widget buildUsageConditions() {
     return Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white,
+         borderRadius: BorderRadius.circular(12),
+      ),
+      
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -272,7 +295,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
                 Image.asset("assets/images/info.png", height: 16, width: 16),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 3),
             Column(
               children:
                   usageConditionsOrganization.asMap().entries.map((entry) {
@@ -290,7 +313,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
                   title: Text(
                     condition,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 15,
                       fontWeight: FontWeight.w400,
                       fontFamily: 'Inter',
                       color: Color(0xFF000000),
