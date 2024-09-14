@@ -33,6 +33,26 @@ String minKiralamaSuresiValue = minKiralamaSuresi.first;
 String ozelGunlerValue = ozelGunler.first;
 String kiralamaSartlariValue = kiralamaSartlari.first;
 String activeTab = 'Şartlar';
+ showAlertDialog(BuildContext context) {
+      AlertDialog alert = AlertDialog(
+          content: const Text("Kaydedildi. İyi eğlenceler!"),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Center(
+                  child: Text('Kapat'),
+                ))
+          ]);
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
 
 class YatPortApp extends StatelessWidget {
   const YatPortApp({super.key});
@@ -72,26 +92,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    showAlertDialog(BuildContext context) {
-      AlertDialog alert = AlertDialog(
-          content: const Text("Kaydedildi. İyi eğlenceler!"),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Center(
-                  child: Text('Kapat'),
-                ))
-          ]);
-
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
-    }
+   
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 238, 243, 247),
@@ -110,22 +111,7 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 5),
             buildUsageConditions(),
             const SizedBox(height: 5),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  showAlertDialog(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.blue,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                  minimumSize: const Size(350, 65),
-                ),
-                child: const Text('Değişiklikleri Kaydet',
-                    style: TextStyle(fontSize: 15)),
-              ),
-            ),
+            
           ],
         ),
       ),
@@ -408,7 +394,7 @@ class _HomePageState extends State<HomePage> {
         ),
         const SizedBox(height: 8),
         Container(
-          width: double.infinity, // Genişlik tam ekran olabilir
+          width: double.infinity, 
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
           decoration: BoxDecoration(
             color: Color(0xFFF7F9FA),
@@ -474,12 +460,14 @@ class _HomePageState extends State<HomePage> {
                           ? Colors.green
                           : Colors.grey),
                   title: Text(condition,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Inter',
-                        color: Color(0xFF000000),
-                      )),
+                      style: GoogleFonts.inter(
+                      textStyle: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF000000),
+                    ),
+                    )
+                  ),
                   onTap: () {
                     setState(() {
                       conditionsChecked[index] = !conditionsChecked[index];
@@ -487,8 +475,27 @@ class _HomePageState extends State<HomePage> {
                   },
                 );
               }).toList(),
+              
+            ),
+            
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  showAlertDialog(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.blue,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                  minimumSize: const Size(315, 56),
+                ),
+                child: const Text('Değişiklikleri Kaydet',
+                    style: TextStyle(fontSize: 15)),
+              ),
             ),
           ],
+          
         ),
       ),
     );

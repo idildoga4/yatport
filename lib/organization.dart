@@ -79,22 +79,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
             ),
             buildUsageConditions(),
             const SizedBox(height: 5),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  showAlertDialog(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.blue,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                  minimumSize: const Size(350, 65),
-                ),
-                child: const Text('Değişiklikleri Kaydet',
-                    style: TextStyle(fontSize: 15)),
-              ),
-            ),
+            
           ],
         ),
       ),
@@ -312,12 +297,13 @@ class _OrganizationPageState extends State<OrganizationPage> {
                   ),
                   title: Text(
                     condition,
-                    style: const TextStyle(
+                    style: GoogleFonts.inter(
+                      textStyle: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
-                      fontFamily: 'Inter',
                       color: Color(0xFF000000),
                     ),
+                    )
                   ),
                   onTap: () {
                     setState(() {
@@ -327,7 +313,32 @@ class _OrganizationPageState extends State<OrganizationPage> {
                   },
                 );
               }).toList(),
+              
             ),
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  showAlertDialog(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.blue,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                  minimumSize: const Size(315, 56),
+                ),
+                child: Text('Değişiklikleri Kaydet',
+                    style: GoogleFonts.inter(
+                      textStyle: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                     
+                      color: Color(0xFFFFFFFF),))
+                    
+                  
+                
+              ),
+            ),)
           ],
         ),
       ),
